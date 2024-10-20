@@ -20,27 +20,27 @@ const VectorInput: React.FC<VectorInputProps> = ({ x, y, z, onChange }) => {
   return (
     <div>
       <NumberInput
-        label="X"
         value={x}
         allowNegative
         allowDecimal
         onChange={(value) => handleChange("x", parseFloat(value + "") || 0)}
+        radius={0}
         maw={200}
       />
       <NumberInput
-        label="Y"
         value={y}
         allowNegative
         allowDecimal
         onChange={(value) => handleChange("y", parseFloat(value + "") || 0)}
+        radius={0}
         maw={200}
       />
       <NumberInput
-        label="Z"
         value={z}
         allowNegative
         allowDecimal
         onChange={(value) => handleChange("z", parseFloat(value + "") || 0)}
+        radius={0}
         maw={200}
       />
     </div>

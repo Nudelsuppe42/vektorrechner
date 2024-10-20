@@ -6,11 +6,10 @@ import {
   Button,
   Card,
   Divider,
-  Grid,
-  GridCol,
+  Group,
   MantineProvider,
   SimpleGrid,
-  Text,
+  Text
 } from "@mantine/core";
 import {
   IconShare,
@@ -35,8 +34,8 @@ export default function App() {
 
   return (
     <MantineProvider forceColorScheme="dark">
-      <Grid w="100vw" p="xl">
-        <GridCol span={6}>
+      <Group w="100vw" p="xl">
+        <div>
           <h3>Vektor 1</h3>
           <VectorInput
             x={vector1.get(Axis.X)}
@@ -44,8 +43,8 @@ export default function App() {
             z={vector1.get(Axis.Z)}
             onChange={(v) => vector1.setAll(v)}
           />
-        </GridCol>
-        <GridCol span={6}>
+        </div>
+        <div>
           <h3>Vektor 2</h3>
           <VectorInput
             x={vector2.get(Axis.X)}
@@ -53,8 +52,8 @@ export default function App() {
             z={vector2.get(Axis.Z)}
             onChange={(v) => vector2.setAll(v)}
           />
-        </GridCol>
-      </Grid>
+        </div>
+      </Group>
       <Divider />
       <Box px="xl" my="sm">
         <Button
@@ -79,7 +78,13 @@ export default function App() {
         >
           Eingabe zurücksetzen
         </Button>
-        <Button leftSection={<IconShare size={14} />} variant="default" onClick={() => {clipboard.copy("https://vektor.nudl.dev")}}>
+        <Button
+          leftSection={<IconShare size={14} />}
+          variant="default"
+          onClick={() => {
+            clipboard.copy("https://vektor.nudl.dev");
+          }}
+        >
           Link Teilen
         </Button>
       </Box>
