@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/main.tsx","./src/math.tsx","./src/vite-env.d.ts","./src/components/vectordisplay.tsx","./src/components/vectorinput.tsx","./src/hooks/usevector.tsx"],"version":"5.6.3"}

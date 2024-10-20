@@ -2,6 +2,8 @@ import "@mantine/core/styles.css";
 import "@mantine/notifications/styles.css";
 
 import {
+  Box,
+  Button,
   Card,
   Divider,
   Grid,
@@ -10,19 +12,30 @@ import {
   SimpleGrid,
   Text,
 } from "@mantine/core";
+import {
+  IconShare,
+  IconSwitchHorizontal,
+  IconTrash,
+} from "@tabler/icons-react";
 import useVector, { Axis } from "./hooks/useVector";
-import { angleBetweenVectors, vectorProduct, vectorScalarProduct } from "./math";
+import {
+  angleBetweenVectors,
+  vectorProduct,
+  vectorScalarProduct,
+} from "./math";
 
+import { useClipboard } from "@mantine/hooks";
 import VectorDisplay from "./components/VectorDisplay";
 import VectorInput from "./components/VectorInput";
 
 export default function App() {
+  const clipboard = useClipboard();
   const vector1 = useVector();
   const vector2 = useVector();
 
   return (
     <MantineProvider forceColorScheme="dark">
-      <Grid w="80vw" p="xl">
+      <Grid w="100vw" p="xl">
         <GridCol span={6}>
           <h3>Vektor 1</h3>
           <VectorInput
@@ -42,6 +55,34 @@ export default function App() {
           />
         </GridCol>
       </Grid>
+      <Divider />
+      <Box px="xl" my="sm">
+        <Button
+          leftSection={<IconSwitchHorizontal size={14} />}
+          mr="md"
+          onClick={() => {
+            const temp = vector1.getAll();
+            vector1.setAll(vector2.getAll());
+            vector2.setAll(temp);
+          }}
+        >
+          Vektoren tauschen
+        </Button>
+        <Button
+          leftSection={<IconTrash size={14} />}
+          mr="md"
+          color="red"
+          onClick={() => {
+            vector1.setAll({ x: 0, y: 0, z: 0 });
+            vector2.setAll({ x: 0, y: 0, z: 0 });
+          }}
+        >
+          Eingabe zurücksetzen
+        </Button>
+        <Button leftSection={<IconShare size={14} />} variant="default" onClick={() => {clipboard.copy("https://vektor.nudl.dev")}}>
+          Link Teilen
+        </Button>
+      </Box>
       <Divider />
       <SimpleGrid cols={2} p="xl">
         <Card withBorder>
@@ -94,7 +135,7 @@ export default function App() {
         </Card>
         <Card withBorder>
           <Text fw="bold" fz="lg">
-            Betrag
+            Betrag / Länge
           </Text>
           <Text>
             Vektor 1:{" "}
@@ -146,14 +187,19 @@ export default function App() {
               angleBetweenVectors(vector1.getAll(), vector2.getAll()) * 1000
             ) / 1000}
             ° (
-            {90-Math.round(
-              angleBetweenVectors(vector1.getAll(), vector2.getAll()) * 1000
-            ) / 1000}
+            {90 -
+              Math.round(
+                angleBetweenVectors(vector1.getAll(), vector2.getAll()) * 1000
+              ) /
+                1000}
             °)
           </Text>
         </Card>
       </SimpleGrid>
-      <Text c="dimmed" pl="xl">... und das alles nur weil Bastian zu faul ist, einen Taschenrechner zu benutzen.</Text>
+      <Text c="dimmed" pl="xl">
+        ... und das alles nur weil Bastian zu faul ist, einen Taschenrechner zu
+        benutzen.
+      </Text>
     </MantineProvider>
   );
 }
